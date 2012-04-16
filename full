@@ -1,0 +1,85 @@
+sub func { return keys %{{map {$_ => 1} @_}}; }
+print join " ",func("afc","ef","re","ef");
+
+sub avg {
+	@s = sort @_;
+	if (@s % 2 == 1) {
+		$median = @s[int(@s/2)];
+	} else {
+		$median = @s[@s/2] + @s[@s/2-1];
+	}
+	$sum += $_ for @_;
+	return ($sum,$median);
+}
+($s, $m) = avg(3,2,1,7,4,9,8);
+print $s," ",$m,"\n";
+
+sub func {
+	$ref = $_[0];
+	@arr = @$ref;
+	return keys %{{map {$_ => 1} @arr}};
+}
+@a = (4,3,2,3,2,5,33);
+print func(\@a);
+
+while(<>) {$h{$_} = ++$count;}
+$a = (sort {$a<=>$b}keys %h)[-2];
+print "Second largest is $a line = $h{$a}";
+
+
+while (<>) { $h{$_}=1;}
+print sort keys %h;
+while (<>) {
+	chomp;
+	print if (length $_ > 10 && length $_ < 20 && m/ed/);
+}
+while (<>) {
+	push gz,$_ if $_ > 0;
+	push lz, $_ if $_ < 0;
+}
+print @gz;
+print @lz;
+
+
+while (<>) {
+	foreach $word (split " ") {
+		$found = 0;
+		for ($i=0;$i<@arr;$i++) {
+			if ($word eq $arr[$i]) {
+				$fre[$i]++;
+				$found = 1;
+			} 
+		}
+		if ($found == 0) {
+			push @arr, $word;
+			push @fre, 1;
+		}
+	}
+}
+for ($i=0;$i<@arr;$i++) {
+	print "$arr[$i]  - $fre[$i]\n";
+}
+
+
+while (<>) {
+	/(\w+)\+(\w*)/;
+	$h{$1} += $2 if exists $h{$1};
+	$h{$1} = $2 if not exists $h{$1};
+	delete $h{$1} if $2 eq "";
+}	
+while (($n,$s) = each %h) {
+	print $n, $s,"\n";
+}
+while (<>) {
+	next if /^~/;
+	tr/ / /s;
+	s/Darcy/Darcies/g;
+	s/1998/1999/g;
+	print;
+}
+while (<>) {
+	print "Words = ", s/\b([A-Z]|[a-z]|$|_)\w+\b//g,", ";
+	print "Numeric with point ",s/\d+\.\d+//g,", ";
+	print "Numeric without point ",s/\d+//g,", ";
+	print "Braces = ",s/[\[{})\]()]//g,"\n";
+}
